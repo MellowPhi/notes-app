@@ -6,6 +6,7 @@ import { addDoc, onSnapshot, doc, deleteDoc, setDoc } from "firebase/firestore"
 import { notesCollection, db } from './firebase'
 
 export default function App() {
+    // Setting up the state
     const [notes, setNotes] = React.useState([])
     const [currentNoteId, setCurrentNoteId] = React.useState("")
     
