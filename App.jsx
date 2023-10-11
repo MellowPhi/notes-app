@@ -12,6 +12,7 @@ export default function App() {
     
 
     console.log(currentNoteId)
+    // yesy
     
     const currentNote = 
         notes.find(note => note.id === currentNoteId)  
