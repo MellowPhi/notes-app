@@ -33,7 +33,7 @@ export default function App() {
         return unsubscribe
     }, [])
 
-    //
+    // If notes array changes, check if there is no currentId
     React.useEffect(() => {
         if (!currentNoteId) {
             setCurrentNoteId(notes[0]?.id)
@@ -42,9 +42,12 @@ export default function App() {
 
     async function createNewNote() {
         const newNote = {
-            body: "# Type your markdown note's title here"
+            body: "# Type your markdown note's title here",
+            createdAt: Date.now(),
+            updatedAt: Date.now()
         }
         // Pushing the notes to firestore
+        // addDoc returns promise
         const newNoteRef = await addDoc(notesCollection, newNote)
         // setNotes(prevNotes => [newNote, ...prevNotes])
         setCurrentNoteId(newNoteRef.id)
@@ -52,10 +55,14 @@ export default function App() {
 
     async function updateNote(text) {
         const docRef = doc(db, "notes", currentNoteId)
-        await setDoc(docRef, { body: text }, { merge: true})
+        await setDoc(docRef, 
+            { body: text, updatedAt: Date.now() },
+            { merge: true}
+            )
     }
 
     async function deleteNote(noteId) {
+        // Get a ref for the doc to be deleted
         const docRef = doc(db, "notes", noteId)
         await deleteDoc(docRef)
     }
