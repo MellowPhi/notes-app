@@ -10,6 +10,8 @@ export default function App() {
     const [notes, setNotes] = React.useState([])
     const [currentNoteId, setCurrentNoteId] = React.useState("")
     
+    const sortedNotes = notes.slice();
+    sortedNotes.sort((a, b) => b.updatedAt - a.updatedAt);
 
     console.log(currentNoteId)
     // yesy sdfdhfk
@@ -28,6 +30,8 @@ export default function App() {
             ...doc.data(),
             id: doc.id
         }))
+
+
         setNotes(notesArr)
         })
         return unsubscribe
@@ -78,7 +82,7 @@ export default function App() {
                         className="split"
                     >
                         <Sidebar
-                            notes={notes}
+                            notes={sortedNotes}
                             currentNote={currentNote}
                             setCurrentNoteId={setCurrentNoteId}
                             newNote={createNewNote}
