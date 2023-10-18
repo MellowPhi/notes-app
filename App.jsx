@@ -9,6 +9,7 @@ export default function App() {
     // Setting up the state
     const [notes, setNotes] = React.useState([])
     const [currentNoteId, setCurrentNoteId] = React.useState("")
+    const [tempNoteText, setTempNoteText] = React.useState("")
     
     const sortedNotes = notes.slice();
     sortedNotes.sort((a, b) => b.updatedAt - a.updatedAt);
@@ -31,7 +32,6 @@ export default function App() {
             id: doc.id
         }))
 
-
         setNotes(notesArr)
         })
         return unsubscribe
@@ -43,6 +43,21 @@ export default function App() {
             setCurrentNoteId(notes[0]?.id)
         }
     }, [notes])
+
+    React.useEffect(() => {
+        if (currentNote) {
+            setTempNoteText(currentNote.body)
+        }
+    }, [currentNote])
+    
+
+    React.useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            updateNote(tempNoteText)
+        }, 500)
+        return () => clearTimeout(timeoutId)
+    }, [tempNoteText])
+
 
     async function createNewNote() {
         const newNote = {
@@ -90,8 +105,8 @@ export default function App() {
                         />
                         {
                         <Editor
-                            currentNote={currentNote}
-                            updateNote={updateNote}
+                            tempNoteText={tempNoteText}
+                            setTempNoteText={setTempNoteText}
                         />
                     }
                     </Split>
