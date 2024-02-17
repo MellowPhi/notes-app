@@ -16,6 +16,7 @@ export default function App() {
 
     console.log(currentNoteId)
     // yesy sdfdhfk test 
+    // Comment from WSL
     
     const currentNote = 
         notes.find(note => note.id === currentNoteId)  
