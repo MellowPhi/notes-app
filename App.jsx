@@ -15,7 +15,7 @@ export default function App() {
     sortedNotes.sort((a, b) => b.updatedAt - a.updatedAt);
 
     console.log(currentNoteId)
-    // yesy sdfdhfk
+    // yesy sdfdhfk test 
     
     const currentNote = 
         notes.find(note => note.id === currentNoteId)  
